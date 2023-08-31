@@ -9,6 +9,7 @@ import loadCSVFile from "./lib/server/utils/csvLoader";
 import {getPineconeClient} from "./lib/server/utils/pinecone";
 import { sql } from 'drizzle-orm'
 import {db} from "./lib/server/db";
+import {sequence} from "@sveltejs/kit/hooks";
 
 dotenv.config();
 const { createIndexIfNotExists, chunkedUpsert } = utils;
@@ -86,8 +87,8 @@ export const dataSetup: Handle = async ({ event, resolve }) => {
     const indexName = getEnv("PINECONE_INDEX");
     const pineconeClient = await getPineconeClient();
     await createIndexIfNotExists(pineconeClient, indexName, 384);
-    // await embedder.init("Xenova/all-MiniLM-L6-v2");
-    // await embedAndUpsert(clean, 1, pineconeClient, indexName);
+    await embedder.init("Xenova/all-MiniLM-L6-v2");
+    await embedAndUpsert(clean, 1, pineconeClient, indexName);
     console.info("Data Setup finished!")
 
     return response;
