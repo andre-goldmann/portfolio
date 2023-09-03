@@ -9,30 +9,55 @@
 </script>
 
 <div>
-    OrderView
-    <pre>{JSON.stringify(data)}</pre>
+
     {#await data.orderFlow}
         <h2>Loading...</h2>
     {:then orderFlow}
         {#if orderFlow}
-            <div class="row">
-                <div class="column" style="background-color:#aaa;">
-                    <h2>Asks (Sell at)</h2>
-                    <h3 class={orderFlow.highestAsk.quantity > orderFlow.highestBid.quantity ? 'highest' : ''}>Highest: {orderFlow.highestAsk.price} ({orderFlow.highestAsk.quantity})</h3>
+            <h1>OrderView {orderFlow.symbol}</h1>
+            <div class="bg-white shadow-lg shadow-slate-200 rounded-lg w-auto">
+                <table class="charts-css bar show-heading show-labels data-spacing-8">
+                    <caption>
+                        Asks (Sell at)
+                        <h3 class={orderFlow.highestAsk.quantity > orderFlow.highestBid.quantity ? 'green' : 'red'}>Highest: {orderFlow.highestAsk.price} ({orderFlow.highestAsk.quantity})</h3>
+                    </caption>
+
+                    <tbody class="mt-[24px!important]">
+
+
                     {#each orderFlow.asks as ask}
-                        <p>Price: {ask.price} Quantity: {ask.quantity}</p>
+                        <tr>
+                            <th>{ask.price}</th>
+                            <td style="--size: {ask.quantity/1000000};">{ask.quantity}</td>
+                        </tr>
                     {/each}
-                    <p>(is the best quoted price at which a market maker is willing to sell a stock.)</p>
-                </div>
-                <div class="column" style="background-color:#bbb;">
-                    <h2>Bids (Buy at)</h2>
-                    <h3>Highest: {orderFlow.highestBid.price} ({orderFlow.highestBid.quantity})</h3>
-                    {#each orderFlow.bids as bid}
-                        <p>Price: {bid.price} Quantity: {bid.quantity}</p>
-                    {/each}
-                    <p>(the highest price that a buyer is willing to pay)</p>
-                </div>
+
+                    </tbody>
+                </table>
             </div>
+
+            <div class="bg-white shadow-lg shadow-slate-200 rounded-lg w-auto">
+                <table class="charts-css bar show-heading show-labels data-spacing-8">
+                    <caption>
+                        Bids (Buy at)
+                        <h3 class={orderFlow.highestAsk.quantity < orderFlow.highestBid.quantity ? 'green' : 'red'}>Highest: {orderFlow.highestBid.price} ({orderFlow.highestBid.quantity})</h3>
+                    </caption>
+
+                    <tbody class="mt-[24px!important]">
+
+
+                    {#each orderFlow.bids as bids}
+                        <tr>
+                            <th>{bids.price}</th>
+                            <td style="--size: {bids.quantity/1000000};">{bids.quantity}</td>
+                        </tr>
+                    {/each}
+
+                    </tbody>
+                </table>
+            </div>
+
+
         {:else}
             <p>No entries found</p>
         {/if}
@@ -40,7 +65,7 @@
         {error.message}
     {/await}
 
-    <h1>DIVS</h1>
+    <!--h1>DIVS</h1>
     <div class="-division -navy">
         <div class="-box -dash-grey -thin2">1</div>
         <div class="-box -dash-grey -thin2">2</div>
@@ -53,37 +78,7 @@
         <div class="-box -dash-grey -thin2">3</div>
         <div class="-box -dash-grey -thin2">4</div>
         <div class="-box -dash-grey -thin2">5</div>
-    </div>
-
-    <div class="bg-white p-8 shadow-lg shadow-slate-200 rounded-lg w-auto">
-        <table class="w-[340px] h-[280px] charts-css bar show-heading show-labels data-spacing-8">
-            <caption>Bar Chart With Spacing</caption>
-
-            <tbody class="mt-[24px!important]">
-            <tr>
-                <th>2022</th>
-                <td style="--size: 0.2;"></td>
-            </tr>
-            <tr>
-                <th>2021</th>
-                <td style="--size: 0.4;"></td>
-            </tr>
-            <tr>
-                <th>2020</th>
-                <td style="--size: 0.6;"></td>
-            </tr>
-            <tr>
-                <th>2019</th>
-                <td style="--size: 0.8;"></td>
-            </tr>
-            <tr>
-                <th>2018</th>
-                <td style="--size: 1;"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
+    </div-->
 
 </div>
 
@@ -199,5 +194,13 @@
     div {
         display: inline-block;
         width: 100%;
+    }
+    .green{
+      background-color: green;
+      color: white;
+    }
+    .red{
+      background-color: red;
+      color: white;
     }
 </style>

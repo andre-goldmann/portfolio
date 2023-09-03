@@ -5,7 +5,7 @@ import {getEnv} from "./utils/util";
 import {Decimal} from "decimal.js";
 import {CronJob} from "cron";
 import {sql} from "drizzle-orm";
-import type {LevelData, OrderFlowDefinition} from "./models";
+import type {LevelData} from "./models";
 import {orderflow} from "./schema";
 
 config({ path: '.env' });

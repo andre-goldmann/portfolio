@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { Pipeline, pipeline, AutoConfig } from "@xenova/transformers";
+//import { Pipeline, pipeline, AutoConfig } from "@xenova/transformers";
 import { Vector } from "@pinecone-database/pinecone";
 import { Document } from 'langchain/document';
 import { EmbeddingsParams, Embeddings } from "langchain/embeddings/base";
@@ -15,10 +15,10 @@ function isString(test: any): test is string {
 }
 
 class Embedder {
-    private pipe: Pipeline;
+    //private pipe: Pipeline;
 
     async init(modelName: string) {
-        const config = await AutoConfig.from_pretrained(modelName);
+        /*const config = await AutoConfig.from_pretrained(modelName);
         this.pipe = await pipeline(
             "embeddings",
             modelName,
@@ -27,7 +27,7 @@ class Embedder {
                 config
             },
 
-        );
+        );*/
     }
 
     // Embeds a text and returns the embedding
@@ -85,7 +85,7 @@ interface TransformersJSEmbeddingParams extends EmbeddingsParams {
 class TransformersJSEmbedding extends Embeddings implements TransformersJSEmbeddingParams {
     modelName: string;
 
-    pipe: Pipeline | null = null;
+    //pipe: Pipeline | null = null;
 
     constructor(params: TransformersJSEmbeddingParams) {
         super(params);
@@ -93,23 +93,25 @@ class TransformersJSEmbedding extends Embeddings implements TransformersJSEmbedd
     }
 
     async embedDocuments(texts: string[]): Promise<number[][]> {
-        this.pipe = this.pipe || await pipeline(
+        /*this.pipe = this.pipe || await pipeline(
             "embeddings",
             this.modelName
         );
 
         const embeddings = await Promise.all(texts.map(async (text) => this.embedQuery(text)));
-        return embeddings;
+        return embeddings;*/
+        return [];
     }
 
     async embedQuery(text: string): Promise<number[]> {
-        this.pipe = this.pipe || await pipeline(
+        /*this.pipe = this.pipe || await pipeline(
             "embeddings",
             this.modelName
         );
 
         const result = await this.pipe(text);
-        return Array.from(result.data) as number[];
+        return Array.from(result.data) as number[];*/
+        return [];
     }
 }
 

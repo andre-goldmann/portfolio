@@ -9,6 +9,7 @@ export interface JobItem {
 }
 
 export interface OrderFlowDefinition{
+  symbol: string,
   asks: LevelData[]
   highestAsk: LevelData,
   bids: LevelData[]
