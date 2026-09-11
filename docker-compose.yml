@@ -1,9 +1,13 @@
 version: '3.8'
 
 services:
-  angular-app:
+  portfolio-app:
     build: .
-    container_name: portfolio
+    container_name: portfolio-app
     restart: always
-    ports:
-      - "80:80"
+    networks:
+      - web-network
+
+networks:
+  web-network:
+    external: true
