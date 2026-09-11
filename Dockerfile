@@ -8,6 +8,6 @@ RUN npm run build -- --configuration production
 
 # Stage 2: Bereitstellung via Nginx
 FROM nginx:alpine
-COPY --from=build /app/dist/angular-test /usr/share/nginx/html
+COPY --from=build /app/dist/portfolio /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
